@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Words - ABC Fun!</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="words">
+  <div class="header">
+    <a href="index.html" class="back-btn">&larr; Home</a>
+    <h1>Words</h1>
+    <button class="slideshow-start-btn" id="slideshow-start">Slideshow</button>
+  </div>
+  <div class="length-selector" id="length-selector"></div>
+  <div class="card-grid" id="card-grid"></div>
+
+  <!-- Fullscreen Slideshow Overlay -->
+  <div class="slideshow" id="slideshow" hidden>
+    <button class="slideshow-close" id="slideshow-close">&times;</button>
+    <div class="slideshow-content">
+      <div class="slideshow-letter" id="slide-letter"></div>
+      <div class="slideshow-word" id="slide-word"></div>
+      <div class="slideshow-image-area" id="slide-image-area"></div>
+      <button class="reveal-btn slideshow-reveal-btn" id="slide-reveal">Show Picture</button>
+    </div>
+    <div class="slideshow-nav">
+      <button class="slideshow-btn" id="slide-prev">&larr;</button>
+      <span class="slideshow-counter" id="slide-counter"></span>
+      <button class="slideshow-btn" id="slide-next">&rarr;</button>
+    </div>
+  </div>
+  <script src="js/words-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
