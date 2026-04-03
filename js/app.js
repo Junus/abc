@@ -61,6 +61,58 @@ async function toggleImage(card) {
   btn.disabled = false;
 }
 
+// ===== Combo Logic =====
+
+var VOWELS = ['A', 'E', 'I', 'O', 'U'];
+var CONSONANTS = 'BCDFGHJKLMNPQRSTVWXYZ'.split('');
+
+var comboItems = [];
+var comboIndex = 0;
+
+function getCombos(letter) {
+  var upper = letter.toUpperCase();
+  var isVowel = VOWELS.indexOf(upper) !== -1;
+  var partners = isVowel ? CONSONANTS : VOWELS;
+  return partners.map(function (p) {
+    return upper + p.toLowerCase();
+  });
+}
+
+function showCombos(letter) {
+  comboItems = getCombos(letter);
+  comboIndex = 0;
+  document.getElementById('combo-overlay').hidden = false;
+  renderComboSlide();
+}
+
+function renderComboSlide() {
+  document.getElementById('combo-letter').textContent = comboItems[comboIndex];
+  document.getElementById('combo-counter').textContent = (comboIndex + 1) + ' / ' + comboItems.length;
+
+  var content = document.getElementById('combo-overlay').querySelector('.slideshow-content');
+  content.style.animation = 'none';
+  content.offsetHeight;
+  content.style.animation = '';
+}
+
+function comboNext() {
+  comboIndex = (comboIndex + 1) % comboItems.length;
+  renderComboSlide();
+}
+
+function comboPrev() {
+  comboIndex = (comboIndex - 1 + comboItems.length) % comboItems.length;
+  renderComboSlide();
+}
+
+function closeCombos() {
+  document.getElementById('combo-overlay').hidden = true;
+}
+
+document.getElementById('combo-close').addEventListener('click', closeCombos);
+document.getElementById('combo-prev').addEventListener('click', comboPrev);
+document.getElementById('combo-next').addEventListener('click', comboNext);
+
 // Render alphabet cards
 function renderAlphabets() {
   const grid = document.getElementById('card-grid');
@@ -78,7 +130,8 @@ function renderAlphabets() {
       '<div class="card-letter">' + letter + ' ' + letter.toLowerCase() + '</div>' +
       '<div class="card-label">' + entry.word + '</div>' +
       '<div class="card-image-area"></div>' +
-      '<button class="reveal-btn">Show Picture</button>';
+      '<button class="reveal-btn">Show Picture</button>' +
+      '<button class="reveal-btn combo-btn" data-letter="' + letter + '">Combos</button>';
 
     grid.appendChild(card);
   });
@@ -130,8 +183,13 @@ function renderLengthSelector(activeLength) {
   });
 }
 
-// Event delegation for reveal buttons
+// Event delegation for reveal buttons and combo buttons
 document.getElementById('card-grid').addEventListener('click', function (e) {
+  if (e.target.classList.contains('combo-btn')) {
+    e.stopPropagation();
+    showCombos(e.target.dataset.letter);
+    return;
+  }
   if (e.target.classList.contains('reveal-btn')) {
     var card = e.target.closest('.card');
     if (card) toggleImage(card);
@@ -206,6 +264,16 @@ function slidePrev() {
   renderSlide();
 }
 
+function slideRand() {
+  if (slideItems.length <= 1) return;
+  var next;
+  do {
+    next = Math.floor(Math.random() * slideItems.length);
+  } while (next === slideshowIndex);
+  slideshowIndex = next;
+  renderSlide();
+}
+
 async function toggleSlideImage() {
   var imageArea = document.getElementById('slide-image-area');
   var btn = document.getElementById('slide-reveal');
@@ -267,8 +335,26 @@ function initSlideshow() {
   nextBtn.addEventListener('click', slideNext);
   revealBtn.addEventListener('click', toggleSlideImage);
 
+  var randBtn = document.getElementById('slide-rand');
+  if (randBtn) randBtn.addEventListener('click', slideRand);
+
+  var comboBtn = document.getElementById('slide-combo');
+  if (comboBtn) comboBtn.addEventListener('click', function () {
+    var item = slideItems[slideshowIndex];
+    if (item) showCombos(item.primary.charAt(0));
+  });
+
   // Keyboard navigation
   document.addEventListener('keydown', function (e) {
+    // Combo overlay takes priority
+    var comboEl = document.getElementById('combo-overlay');
+    if (comboEl && !comboEl.hidden) {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); comboNext(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); comboPrev(); }
+      else if (e.key === 'Escape') closeCombos();
+      return;
+    }
+
     var el = document.getElementById('slideshow');
     if (!el || el.hidden) return;
 

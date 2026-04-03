@@ -22,11 +22,25 @@
       <div class="slideshow-word" id="slide-word"></div>
       <div class="slideshow-image-area" id="slide-image-area"></div>
       <button class="reveal-btn slideshow-reveal-btn" id="slide-reveal">Show Picture</button>
+      <button class="reveal-btn slideshow-combo-btn" id="slide-combo">Combos</button>
     </div>
     <div class="slideshow-nav">
       <button class="slideshow-btn" id="slide-prev">&larr;</button>
       <span class="slideshow-counter" id="slide-counter"></span>
       <button class="slideshow-btn" id="slide-next">&rarr;</button>
+      <button class="slideshow-btn" id="slide-rand">&#x1f3b2;</button>
+    </div>
+  </div>
+  <!-- Combo Slideshow Overlay -->
+  <div class="combo-overlay" id="combo-overlay" hidden>
+    <button class="slideshow-close" id="combo-close">&times;</button>
+    <div class="slideshow-content">
+      <div class="combo-letter" id="combo-letter"></div>
+    </div>
+    <div class="slideshow-nav">
+      <button class="slideshow-btn" id="combo-prev">&larr;</button>
+      <span class="slideshow-counter" id="combo-counter"></span>
+      <button class="slideshow-btn" id="combo-next">&rarr;</button>
     </div>
   </div>
   <script src="js/words-data.js"></script>

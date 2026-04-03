@@ -451,6 +451,55 @@ body {
   text-align: center;
 }
 
+/* ===== Combo Overlay ===== */
+
+.combo-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: linear-gradient(135deg, #E8EAF6 0%, #C5CAE9 50%, #E8EAF6 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  touch-action: pan-y;
+}
+
+.combo-overlay[hidden] {
+  display: none;
+}
+
+.combo-letter {
+  font-size: 12rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+  text-shadow: 4px 4px 0 #FFCC80;
+}
+
+.combo-btn {
+  border-color: var(--color-secondary) !important;
+  color: var(--color-secondary) !important;
+}
+
+.combo-btn:hover {
+  background: var(--color-secondary) !important;
+  color: var(--color-text-light) !important;
+}
+
+.slideshow-combo-btn {
+  border-color: var(--color-secondary) !important;
+  color: var(--color-secondary) !important;
+  font-size: 1.1rem;
+  padding: 10px 28px;
+}
+
+.slideshow-combo-btn:hover {
+  background: var(--color-secondary) !important;
+  color: var(--color-text-light) !important;
+}
+
 /* ===== Responsive ===== */
 
 @media (max-width: 600px) {
@@ -526,5 +575,9 @@ body {
     width: 44px;
     height: 44px;
     font-size: 1.5rem;
+  }
+
+  .combo-letter {
+    font-size: 7rem;
   }
 }
