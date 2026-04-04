@@ -109,9 +109,12 @@ function closeCombos() {
   document.getElementById('combo-overlay').hidden = true;
 }
 
-document.getElementById('combo-close').addEventListener('click', closeCombos);
-document.getElementById('combo-prev').addEventListener('click', comboPrev);
-document.getElementById('combo-next').addEventListener('click', comboNext);
+var comboCloseBtn = document.getElementById('combo-close');
+var comboPrevBtn = document.getElementById('combo-prev');
+var comboNextBtn = document.getElementById('combo-next');
+if (comboCloseBtn) comboCloseBtn.addEventListener('click', closeCombos);
+if (comboPrevBtn) comboPrevBtn.addEventListener('click', comboPrev);
+if (comboNextBtn) comboNextBtn.addEventListener('click', comboNext);
 
 // Render alphabet cards
 function renderAlphabets() {
